@@ -4,9 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Сырок тревожный — Telegram Mini App</title>
-<script src="https://telegram.org/js/telegram-web-app.js" async></script>
+<script src="https://telegram.org/js/telegram-web-app.js" defer></script>
 <style>
-
 /* Self-contained utility classes (zero external CDN dependency) */
 .hidden { display: none !important; }
 .block { display: block; }
@@ -354,7 +353,7 @@ input[type="range"] {
     <div class="flex items-center gap-1.5 shrink-0">
       <button id="btnSound" type="button" class="btn-ghost px-2.5 py-1.5 text-xs" aria-label="Переключить мягкий звук">Звук: выкл</button>
       <button id="btnTheme" type="button" class="btn-ghost px-2.5 py-1.5 text-xs" aria-label="Переключить тему">Тёмная</button>
-      <button id="btnCrisisTop" type="button" class="btn-terra px-3 py-1.5 text-xs">Кризис</button>
+      <button id="btnCrisisTop" type="button" class="btn-terra px-3 py-1.5 text-xs">Помощь</button>
     </div>
   </div>
 </header>
@@ -370,7 +369,7 @@ input[type="range"] {
       <div class="p-5 space-y-3">
         <h1 class="font-serif-title text-2xl sm:text-3xl leading-tight font-bold">Сырок рядом. Сейчас сбавим обороты.</h1>
         <p class="text-sm sm:text-base leading-relaxed" style="color: var(--ink-2);">
-          Да, сейчас тревожно и тело на взводе — это выброс адреналина, он обязательно пойдёт на спад. Не нужно печатать или собираться с мыслями. Просто выбери один шаг.
+          Да, сейчас тревожно и тело на взводе — это выброс адреналина, он обязательно пойдёт на спад. Не нужно подбирать слова или что-то объяснять — просто выбери один шаг ниже и следуй за подсказками.
         </p>
       </div>
     </div>
@@ -460,10 +459,11 @@ input[type="range"] {
         <p id="breathHint" class="text-sm text-center mt-4 max-w-sm" style="color: var(--ink-2);">
           Двойной короткий вдох через нос и длинный мягкий выдох через рот — быстрее всего снижает пульс при панике.
         </p>
-        <div class="flex items-center gap-3 mt-4 text-xs" style="color: var(--mute);">
+        <div class="flex flex-wrap items-center justify-center gap-2.5 mt-4 text-xs" style="color: var(--mute);">
           <span>Завершено циклов: <strong id="breathCycles" style="color: var(--ink);">0</strong></span>
           <span>·</span>
-          <span id="hapticStatus">Вибрация активна</span>
+          <span id="hapticStatus">Вибрация: авто</span>
+          <button id="btnTestHaptic" type="button" class="btn-ghost px-2.5 py-1 text-xs">Проверить вибрацию</button>
         </div>
       </div>
 
@@ -497,7 +497,7 @@ input[type="range"] {
       <div class="flex items-start justify-between gap-3">
         <div>
           <h2 class="font-serif-title text-2xl font-bold">Заземление 5–4–3–2–1</h2>
-          <p class="text-sm mt-1" style="color: var(--ink-2);">Находи предметы вокруг и просто нажимай на камешки. Печатать ничего не нужно.</p>
+          <p class="text-sm mt-1" style="color: var(--ink-2);">Находи предметы вокруг и просто отмечай камешки одним касанием.</p>
         </div>
         <button id="btnReset54321" type="button" class="btn-ghost px-3 py-1.5 text-xs shrink-0">Заново</button>
       </div>
@@ -773,13 +773,12 @@ input[type="range"] {
       <button id="btnCrisisClose" type="button" class="btn-ghost px-2.5 py-1 text-xs">Закрыть</button>
     </div>
     <p class="text-sm leading-relaxed" style="color: var(--ink-2);">
-      «Сырок тревожный» — инструмент самопомощи, он не заменяет врача или психотерапевта. Если тебе сейчас небезопасно или паника не отпускает, пожалуйста, свяжись со специалистом:
+      «Сырок тревожный» — инструмент самопомощи, он не заменяет врача или психотерапевта. Если тревога не отпускает или приступы повторяются, позвоните и запишитесь на приём к специалисту:
     </p>
-    <div class="soft-panel p-4 space-y-2 text-sm">
-      <div><strong>Экстренная помощь (РФ):</strong> <a href="tel:112" class="underline font-semibold" style="color: var(--accent-dark);">112</a></div>
-      <div><strong>Психологическая помощь МЧС (круглосуточно):</strong> <a href="tel:+74959895050" class="underline font-semibold" style="color: var(--accent-dark);">+7 (495) 989-50-50</a></div>
-      <div class="text-xs pt-1" style="color: var(--mute);">
-        <a href="https://findahelpline.com/organizations/emergency-psychological-assistance-emercom-of-russia" target="_blank" rel="noopener noreferrer" class="underline">Справочник бесплатных линий помощи (Find A Helpline)</a>
+    <div class="soft-panel p-4 space-y-2.5 text-sm">
+      <div class="font-semibold">Центр ментального здоровья сети клиник «Семейный доктор»</div>
+      <div>
+        <a href="tel:+74958591248" class="btn-primary inline-flex items-center justify-center w-full py-2.5 px-4 text-sm" style="text-decoration: none;">Позвонить и записаться: +7 (495) 859-12-48</a>
       </div>
     </div>
     <button id="btnCopySosMsg" type="button" class="btn-primary w-full py-3 text-sm">Скопировать сообщение близкому человеку</button>
@@ -811,17 +810,28 @@ input[type="range"] {
 (function() {
   'use strict';
 
-  // --- Telegram WebApp Bridge (graceful fallback outside Telegram) ---
-  const tg = (window.Telegram && window.Telegram.WebApp) ? window.Telegram.WebApp : null;
-  if (tg) {
+  // --- Telegram WebApp Bridge (dynamic lookup so async SDK always works!) ---
+  let tgInitialized = false;
+  function getTg() {
+    return (window.Telegram && window.Telegram.WebApp) ? window.Telegram.WebApp : null;
+  }
+  function initTgIfReady() {
+    const t = getTg();
+    if (!t || tgInitialized) return;
+    tgInitialized = true;
     try {
-      tg.ready();
-      tg.expand();
-      if (tg.colorScheme === 'dark') {
-        document.documentElement.classList.add('dark');
+      t.ready();
+      t.expand();
+      const hs = document.getElementById('hapticStatus');
+      if (hs && t.HapticFeedback) {
+        hs.textContent = 'Telegram Haptic активен';
       }
     } catch (e) {}
   }
+  initTgIfReady();
+  window.addEventListener('load', initTgIfReady);
+  setTimeout(initTgIfReady, 400);
+  setTimeout(initTgIfReady, 1200);
 
   // --- Safe Storage (CloudStorage / localStorage fallback) ---
   const STORAGE_KEY = 'syrok_trevozhnyj_v1';
@@ -857,9 +867,10 @@ input[type="range"] {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
     } catch (e) {}
-    if (tg && tg.CloudStorage) {
+    const t = getTg();
+    if (t && t.CloudStorage) {
       try {
-        tg.CloudStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+        t.CloudStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
       } catch (e) {}
     }
   }
@@ -876,17 +887,21 @@ input[type="range"] {
 
   // --- Haptics & Soft Web Audio ---
   function triggerHaptic(type) {
-    if (tg && tg.HapticFeedback) {
+    initTgIfReady();
+    const t = getTg();
+    if (t && t.HapticFeedback) {
       try {
-        if (type === 'success') tg.HapticFeedback.notificationOccurred('success');
-        else if (type === 'medium') tg.HapticFeedback.impactOccurred('medium');
-        else tg.HapticFeedback.impactOccurred('light');
-        return;
+        if (type === 'success') t.HapticFeedback.notificationOccurred('success');
+        else if (type === 'heavy') t.HapticFeedback.impactOccurred('heavy');
+        else if (type === 'medium') t.HapticFeedback.impactOccurred('medium');
+        else if (type === 'soft') t.HapticFeedback.impactOccurred('soft');
+        else t.HapticFeedback.impactOccurred('light');
       } catch (e) {}
     }
     if (navigator.vibrate) {
       try {
-        navigator.vibrate(type === 'medium' ? 28 : 14);
+        const ms = type === 'heavy' ? 50 : (type === 'medium' ? 32 : 16);
+        navigator.vibrate(ms);
       } catch (e) {}
     }
   }
@@ -1045,6 +1060,7 @@ input[type="range"] {
   let breathPhaseIdx = 0;
   let breathPhaseStart = 0;
   let breathCycles = 0;
+  let lastBreathPulseSec = -1;
 
   const breathOrb = document.getElementById('breathOrb');
   const breathPhaseLabel = document.getElementById('breathPhaseLabel');
@@ -1093,7 +1109,15 @@ input[type="range"] {
     const scale = phase.scaleFrom + (phase.scaleTo - phase.scaleFrom) * eased;
     breathOrb.style.transform = 'scale(' + scale.toFixed(3) + ')';
     breathPhaseLabel.textContent = phase.label;
+    const secTick = Math.floor(elapsed);
     breathSecLabel.textContent = Math.max(1, Math.ceil(phase.sec - elapsed));
+
+    // Gentle rhythmic pulse every second during inhale/exhale so user feels rhythm with eyes closed
+    if (secTick !== lastBreathPulseSec && secTick > 0 && secTick < phase.sec) {
+      lastBreathPulseSec = secTick;
+      if (phase.scaleTo > phase.scaleFrom) triggerHaptic('light');
+      else if (phase.scaleTo < phase.scaleFrom) triggerHaptic('soft');
+    }
 
     if (elapsed >= phase.sec) {
       breathPhaseIdx += 1;
@@ -1104,8 +1128,9 @@ input[type="range"] {
         lastPracticeName = pat.name;
       }
       breathPhaseStart = ts;
+      lastBreathPulseSec = 0;
       const nextPhase = pat.phases[breathPhaseIdx];
-      triggerHaptic(breathPhaseIdx === 0 ? 'medium' : 'light');
+      triggerHaptic(breathPhaseIdx === 0 ? 'heavy' : 'medium');
       playSoftTone(nextPhase.freq, 0.35);
     }
     breathRaf = requestAnimationFrame(breathStep);
@@ -1129,6 +1154,12 @@ input[type="range"] {
   document.getElementById('btnBreathReset').addEventListener('click', () => {
     stopBreathing(true);
     triggerHaptic('light');
+  });
+
+  document.getElementById('btnTestHaptic').addEventListener('click', () => {
+    triggerHaptic('heavy');
+    setTimeout(() => triggerHaptic('medium'), 180);
+    showToast('Тестовый импульс вибрации отправлен');
   });
 
   // ==================== GROUNDING ====================
