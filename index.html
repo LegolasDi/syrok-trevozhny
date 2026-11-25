@@ -151,6 +151,7 @@ h1, h2, h3, p { margin: 0; }
   .sm\:text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
 }
 
+.items-stretch { align-items: stretch; }
 :root {
   --bg: #EEF3F1;
   --surface: #FFFFFF;
@@ -777,14 +778,17 @@ input[type="range"] {
     </p>
     <div class="soft-panel p-4 space-y-3 text-sm">
       <div class="font-semibold">Центр ментального здоровья сети клиник «Семейный доктор»</div>
-      <div class="flex gap-2">
-        <button id="btnCallClinic" type="button" class="btn-primary flex-1 py-2.5 px-3 text-sm">Позвонить: +7 (495) 859-12-48</button>
+      <div class="flex items-stretch gap-2">
+        <a id="btnCallClinic" href="tel:+74958591248" target="_top" class="btn-primary flex-1 py-2.5 px-3 text-center flex flex-col items-center justify-center leading-tight" style="text-decoration: none;">
+          <span class="text-xs opacity-90">Позвонить и записаться</span>
+          <span class="text-sm font-bold mt-0.5" style="white-space: nowrap;">+7 (495) 859-12-48</span>
+        </a>
         <button id="btnCopyClinicPhone" type="button" class="btn-ghost px-3 py-2.5 text-xs shrink-0">Скопировать</button>
       </div>
       <div class="pt-2 border-t space-y-2" style="border-color: var(--border);">
-        <p class="text-xs sm:text-sm" style="color: var(--ink-2);">или вы можете написать нашим менеджерам <strong style="color: var(--ink);">+7-968-793-31-18</strong></p>
+        <p class="text-xs sm:text-sm" style="color: var(--ink-2);">или вы можете написать нашим менеджерам <strong style="color: var(--ink); white-space: nowrap;">@CMZ_CD</strong></p>
         <div class="flex gap-2">
-          <button id="btnWriteManagers" type="button" class="btn-ghost flex-1 py-2 px-3 text-xs sm:text-sm font-semibold">Написать в Telegram</button>
+          <button id="btnWriteManagers" type="button" class="btn-ghost flex-1 py-2 px-3 text-xs sm:text-sm font-semibold">Написать @CMZ_CD в Telegram</button>
           <button id="btnCopyManagerPhone" type="button" class="btn-ghost px-3 py-2 text-xs shrink-0">Скопировать</button>
         </div>
       </div>
@@ -1758,15 +1762,6 @@ input[type="range"] {
   }
 
   document.getElementById('btnCallClinic').addEventListener('click', () => {
-    const telUrl = 'tel:+74958591248';
-    const t = getTg();
-    let opened = false;
-    if (t && typeof t.openLink === 'function') {
-      try { t.openLink(telUrl); opened = true; } catch (e) {}
-    }
-    if (!opened) {
-      window.location.href = telUrl;
-    }
     triggerHaptic('medium');
   });
 
@@ -1776,7 +1771,7 @@ input[type="range"] {
   });
 
   document.getElementById('btnWriteManagers').addEventListener('click', () => {
-    const tgUrl = 'https://t.me/+79687933118';
+    const tgUrl = 'https://t.me/CMZ_CD';
     const t = getTg();
     if (t && typeof t.openTelegramLink === 'function') {
       try { t.openTelegramLink(tgUrl); triggerHaptic('light'); return; } catch (e) {}
@@ -1786,7 +1781,7 @@ input[type="range"] {
   });
 
   document.getElementById('btnCopyManagerPhone').addEventListener('click', () => {
-    copyTextToClipboard('+79687933118', 'Номер менеджеров скопирован');
+    copyTextToClipboard('@CMZ_CD', 'Юзернейм @CMZ_CD скопирован');
     triggerHaptic('light');
   });
 
