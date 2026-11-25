@@ -775,10 +775,18 @@ input[type="range"] {
     <p class="text-sm leading-relaxed" style="color: var(--ink-2);">
       «Сырок тревожный» — инструмент самопомощи, он не заменяет врача или психотерапевта. Если тревога не отпускает или приступы повторяются, позвоните и запишитесь на приём к специалисту:
     </p>
-    <div class="soft-panel p-4 space-y-2.5 text-sm">
+    <div class="soft-panel p-4 space-y-3 text-sm">
       <div class="font-semibold">Центр ментального здоровья сети клиник «Семейный доктор»</div>
-      <div>
-        <a href="tel:+74958591248" class="btn-primary inline-flex items-center justify-center w-full py-2.5 px-4 text-sm" style="text-decoration: none;">Позвонить и записаться: +7 (495) 859-12-48</a>
+      <div class="flex gap-2">
+        <button id="btnCallClinic" type="button" class="btn-primary flex-1 py-2.5 px-3 text-sm">Позвонить: +7 (495) 859-12-48</button>
+        <button id="btnCopyClinicPhone" type="button" class="btn-ghost px-3 py-2.5 text-xs shrink-0">Скопировать</button>
+      </div>
+      <div class="pt-2 border-t space-y-2" style="border-color: var(--border);">
+        <p class="text-xs sm:text-sm" style="color: var(--ink-2);">или вы можете написать нашим менеджерам <strong style="color: var(--ink);">+7-968-793-31-18</strong></p>
+        <div class="flex gap-2">
+          <button id="btnWriteManagers" type="button" class="btn-ghost flex-1 py-2 px-3 text-xs sm:text-sm font-semibold">Написать в Telegram</button>
+          <button id="btnCopyManagerPhone" type="button" class="btn-ghost px-3 py-2 text-xs shrink-0">Скопировать</button>
+        </div>
       </div>
     </div>
     <button id="btnCopySosMsg" type="button" class="btn-primary w-full py-3 text-sm">Скопировать сообщение близкому человеку</button>
@@ -1741,6 +1749,47 @@ input[type="range"] {
   document.getElementById('btnCrisisClose').addEventListener('click', () => crisisModal.classList.add('hidden'));
   crisisModal.addEventListener('click', (e) => { if (e.target === crisisModal) crisisModal.classList.add('hidden'); });
 
+  function copyTextToClipboard(text, toastText) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => showToast(toastText)).catch(() => fallbackCopy(text, toastText));
+    } else {
+      fallbackCopy(text, toastText);
+    }
+  }
+
+  document.getElementById('btnCallClinic').addEventListener('click', () => {
+    const telUrl = 'tel:+74958591248';
+    const t = getTg();
+    let opened = false;
+    if (t && typeof t.openLink === 'function') {
+      try { t.openLink(telUrl); opened = true; } catch (e) {}
+    }
+    if (!opened) {
+      window.location.href = telUrl;
+    }
+    triggerHaptic('medium');
+  });
+
+  document.getElementById('btnCopyClinicPhone').addEventListener('click', () => {
+    copyTextToClipboard('+74958591248', 'Номер клиники скопирован');
+    triggerHaptic('light');
+  });
+
+  document.getElementById('btnWriteManagers').addEventListener('click', () => {
+    const tgUrl = 'https://t.me/+79687933118';
+    const t = getTg();
+    if (t && typeof t.openTelegramLink === 'function') {
+      try { t.openTelegramLink(tgUrl); triggerHaptic('light'); return; } catch (e) {}
+    }
+    window.open(tgUrl, '_blank', 'noopener,noreferrer');
+    triggerHaptic('light');
+  });
+
+  document.getElementById('btnCopyManagerPhone').addEventListener('click', () => {
+    copyTextToClipboard('+79687933118', 'Номер менеджеров скопирован');
+    triggerHaptic('light');
+  });
+
   document.getElementById('btnCopySosMsg').addEventListener('click', () => {
     const text = 'Привет, мне сейчас очень тревожно, накрывает паника. Можешь просто побыть со мной на связи или написать пару слов?';
     if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -1750,12 +1799,12 @@ input[type="range"] {
     }
   });
 
-  function fallbackCopy(text) {
+  function fallbackCopy(text, toastText) {
     const ta = document.createElement('textarea');
     ta.value = text;
     document.body.appendChild(ta);
     ta.select();
-    try { document.execCommand('copy'); showToast('Сообщение скопировано'); } catch (e) {}
+    try { document.execCommand('copy'); showToast(toastText || 'Сообщение скопировано'); } catch (e) {}
     document.body.removeChild(ta);
   }
 
